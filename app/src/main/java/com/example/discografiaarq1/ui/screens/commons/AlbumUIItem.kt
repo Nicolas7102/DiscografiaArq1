@@ -17,5 +17,8 @@ fun AlbumUIItem(
         Text(
             text = album.title,
         )
+        Text(
+            text = album.artistCredit[0].name
+        )
     }
 }

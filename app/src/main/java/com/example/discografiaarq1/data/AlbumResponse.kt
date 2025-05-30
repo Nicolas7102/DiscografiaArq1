@@ -10,4 +10,10 @@ data class AlbumResponse(
 data class Album(
     val id: String,
     val title: String,
+    @SerializedName("artist-credit")
+    val artistCredit: List<ArtistCredit>
+)
+
+data class ArtistCredit(
+    val name: String,
 )
