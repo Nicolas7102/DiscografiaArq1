@@ -11,11 +11,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.musicdiscography.AlbumUIList
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.discografiaarq1.ui.screens.albumlist.AlbumListScreenViewmodel
 import com.example.discografiaarq1.ui.theme.DiscografiaArq1Theme
 
 @Composable
-fun AlbumScreen(albumList: List<Album>, modifier: Modifier = Modifier) {
+fun AlbumListScreen(modifier: Modifier = Modifier, vm: AlbumListScreenViewmodel = viewModel()) {
     Column(
         modifier = Modifier.fillMaxSize().padding(16.dp)
     ) {
@@ -25,14 +26,14 @@ fun AlbumScreen(albumList: List<Album>, modifier: Modifier = Modifier) {
             modifier = modifier
         )
         Spacer(modifier = Modifier.height(12.dp))
-        AlbumUIList(albumList, Modifier.fillMaxSize())
+        AlbumUIList(vm.uiState.albumList, Modifier.fillMaxSize())
     }
 
 }
 
 @Preview(showBackground = true)
 @Composable
-fun AlbumScreenPreview() {
+fun AlbumListScreenPreview() {
     DiscografiaArq1Theme {
         //MusicDiscographyScreen(List<Album>())
     }
