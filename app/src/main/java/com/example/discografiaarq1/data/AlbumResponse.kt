@@ -17,3 +17,7 @@ data class Album(
 data class ArtistCredit(
     val name: String,
 )
+
+fun emptyAlbum() : Album {
+    return Album("", "", emptyList())
+}

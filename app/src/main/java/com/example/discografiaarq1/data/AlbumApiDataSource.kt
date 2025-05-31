@@ -36,9 +36,9 @@ class AlbumApiDataSource : IAlbumDataSource{
             Log.e(TAG, "Unknown error: ${e.localizedMessage}")
             emptyList()
         }
+    }
 
-
-
-
+    override suspend fun getAlbumById(albumId: String): Album {
+        return RetrofitInstance.albumApi.getAlbumSearch(albumId).albums[0]
     }
 }

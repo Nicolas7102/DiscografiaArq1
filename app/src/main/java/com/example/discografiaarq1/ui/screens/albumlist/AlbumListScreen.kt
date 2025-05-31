@@ -17,11 +17,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
+import com.example.discografiaarq1.ui.screens.Screens
 import com.example.discografiaarq1.ui.screens.albumlist.AlbumListScreenViewmodel
 import com.example.discografiaarq1.ui.theme.DiscografiaArq1Theme
 
 @Composable
-fun AlbumListScreen(modifier: Modifier = Modifier, vm: AlbumListScreenViewmodel = viewModel()) {
+fun AlbumListScreen(modifier: Modifier = Modifier,
+                    vm: AlbumListScreenViewmodel = viewModel(),
+                    navController: NavHostController
+)
+{
     Column(
         modifier = Modifier.fillMaxSize().padding(16.dp)
     ) {
@@ -52,7 +58,9 @@ fun AlbumListScreen(modifier: Modifier = Modifier, vm: AlbumListScreenViewmodel 
         }
 
         Spacer(modifier = Modifier.height(12.dp))
-        AlbumUIList(vm.uiState.albumList, Modifier.fillMaxSize())
+        AlbumUIList(vm.uiState.albumList, Modifier.fillMaxSize(), onClick = {
+                id -> navController.navigate(Screens.AlbumDetail.route + "/${id}")
+        })
     }
 
 }

@@ -8,7 +8,8 @@ import androidx.compose.foundation.lazy.items
 @Composable
 fun AlbumUIList(
     list: List<Album>,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onClick: (String) -> Unit
 ) {
     LazyColumn (
         modifier = modifier
@@ -17,7 +18,7 @@ fun AlbumUIList(
             items = list,
             key = { it -> it.id }
         ) {
-            album -> AlbumUIItem(album)
+            album -> AlbumUIItem(album, onClick = onClick)
         }
     }
 }

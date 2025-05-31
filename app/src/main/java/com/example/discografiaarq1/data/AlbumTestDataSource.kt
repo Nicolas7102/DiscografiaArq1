@@ -17,6 +17,10 @@ class AlbumTestDataSource : IAlbumDataSource {
         return albumResponse.albums
     }
 
+    override suspend fun getAlbumById(albumId: String): Album {
+        return getAlbums("") [0]
+    }
+
     var json = """
       {
       "created": "2025-05-29T20:51:49.294Z",

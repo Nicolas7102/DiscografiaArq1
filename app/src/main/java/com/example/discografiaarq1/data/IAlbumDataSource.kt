@@ -4,4 +4,5 @@ import com.example.musicdiscography.Album
 
 interface IAlbumDataSource {
     suspend fun getAlbums(search: String) : List<Album>
+    suspend fun getAlbumById(albumId: String) : Album
 }
