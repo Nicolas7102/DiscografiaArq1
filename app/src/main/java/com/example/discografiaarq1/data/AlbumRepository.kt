@@ -6,7 +6,7 @@ import com.example.musicdiscography.Album
 class AlbumRepository (val albumDataSource: IAlbumDataSource = AlbumApiDataSource())
     : IAlbumRepository
 {
-    override suspend fun fetchAlbums() : List<Album>{
-        return albumDataSource.getAlbums()
+    override suspend fun fetchAlbums(search: String) : List<Album>{
+        return albumDataSource.getAlbums(search)
     }
 }

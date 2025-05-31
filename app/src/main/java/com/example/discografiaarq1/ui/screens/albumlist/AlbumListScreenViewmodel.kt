@@ -25,21 +25,22 @@ class AlbumListScreenViewmodel(
     var uiState by mutableStateOf(AlbumListScreenState())
         private set
 
-    init {
-        fetchAlbums()
-    }
-
     private var fetchJob: Job? = null
 
     fun fetchAlbums() {
         fetchJob?.cancel()
         fetchJob = viewModelScope.launch {
             try {
-                uiState = uiState.copy(albumList = albumRepository.fetchAlbums())
+                uiState = uiState.copy(albumList = albumRepository.fetchAlbums(uiState.searchQuery))
             }
             catch (e: IOException) {
                 Log.e("AlbumApp", "Error recuperando la lista de albumes :(")
             }
         }
     }
+
+    fun updateSearchQuery(search: String) {
+        uiState = uiState.copy(searchQuery = search, albumList = uiState.albumList)
+    }
+
 }

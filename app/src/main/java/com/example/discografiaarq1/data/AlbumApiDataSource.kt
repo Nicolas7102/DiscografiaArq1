@@ -1,41 +1,44 @@
 package com.example.discografiaarq1.data
 
+import android.icu.text.StringSearch
 import android.util.Log
 import com.example.musicdiscography.Album
 import okhttp3.OkHttpClient
+import okio.IOException
+import retrofit2.HttpException
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class AlbumApiDataSource : IAlbumDataSource{
-    val BASE_URL = "https://musicbrainz.org/ws/2/"
+    private val TAG = "DiscographyApp"
 
-    val client = OkHttpClient.Builder()
-        .addInterceptor { chain ->
-            val request = chain.request().newBuilder()
-                .header("User-Agent", "DiscographyApp/1.0 (your@email.com)")
-                .build()
-            chain.proceed(request)
+    override suspend fun getAlbums(search: String): List<Album> {
+        Log.d(TAG, "AlbumApiDataSource.getAlbums()")
+
+        return try{
+            Log.d(TAG, "AlbumApiDataSource.getAlbums Search: $search")
+            var prefix = "release:\""
+            var suffix = "\""
+            var query = prefix + search + suffix
+            val albumResponse = RetrofitInstance.albumApi.getAlbumSearch(query)
+            Log.d(TAG, "AlbumApiDataSource.getAlbums Result: ${albumResponse.albums.size}")
+            return albumResponse.albums
+        } catch (e: HttpException) {
+            Log.e(TAG, "HTTP Error: ${e.code()}: ${e.message()}")
+            emptyList()
         }
-        .build()
+        catch (e: IOException) {
+            Log.e(TAG, "Network Error: ${e.localizedMessage}")
+            emptyList()
+        }
 
-    val retrofit = Retrofit.Builder()
-        .baseUrl(BASE_URL)
-        .client(client)
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
+        catch (e: Exception) {
+            Log.e(TAG, "Unknown error: ${e.localizedMessage}")
+            emptyList()
+        }
 
-    val api = retrofit.create(IAlbumAPI::class.java)
 
-    override suspend fun getAlbums(): List<Album> {
-        Log.d("DiscographyApp", "AlbumApiDataSource.getAlbums()")
 
-        var prefix = "release:\""
-        var albumInput = "efil4zaggin"
-        var suffix = "\""
-        var query = prefix + albumInput + suffix
-        val albumResponse = api.getAlbumSearch(query)
 
-        Log.d("DiscographyApp", "AlbumApiDataSource.getAlbums Result: ${albumResponse.albums.size}")
-        return albumResponse.albums
     }
 }

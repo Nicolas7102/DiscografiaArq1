@@ -8,7 +8,7 @@ import kotlinx.coroutines.delay
 
 class AlbumTestDataSource : IAlbumDataSource {
 
-    override suspend fun getAlbums() : List<Album> {
+    override suspend fun getAlbums(search: String) : List<Album> {
 
         val gson = Gson()
         val albumResponse = gson.fromJson(json, AlbumResponse::class.java)
