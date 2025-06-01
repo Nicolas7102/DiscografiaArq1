@@ -10,13 +10,6 @@ interface IImageAPI {
     @GET("release-group")
 
     suspend fun getImageSearch(
-        @Query("release/") search: String,
-        @Query("fmt") format: String = "json"
-    ) : AlbumResponse
-
-    @GET("release{id}")
-    suspend fun getAlbumById(
-        @Path("id") albumId: String,
-        @Query("fmt") format: String = "json"
-    ) : AlbumResponse
+        @Query("release/") id: String,
+    ) : ImageResponse
 }

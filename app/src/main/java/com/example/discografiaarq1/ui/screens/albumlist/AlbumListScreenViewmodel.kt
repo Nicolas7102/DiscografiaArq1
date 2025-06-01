@@ -7,11 +7,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.discografiaarq1.data.AlbumRepository
-import com.example.discografiaarq1.data.AlbumTestDataSource
 import com.example.discografiaarq1.domain.IAlbumRepository
-import com.example.musicdiscography.Album
-import com.example.musicdiscography.AlbumResponse
-import com.google.gson.Gson
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import java.io.IOException
@@ -30,6 +26,7 @@ class AlbumListScreenViewmodel(
         fetchJob = viewModelScope.launch {
             try {
                 uiState = uiState.copy(albumList = albumRepository.fetchAlbums(uiState.searchQuery))
+                uiState = uiState.copy(imageList = imageRepository.fetchImages(uiState.searchId))
             }
             catch (e: IOException) {
                 Log.e("AlbumApp", "Error recuperando la lista de albumes :(")

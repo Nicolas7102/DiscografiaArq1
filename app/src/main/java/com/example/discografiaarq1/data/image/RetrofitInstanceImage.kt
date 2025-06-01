@@ -25,8 +25,8 @@ object RetrofitInstanceImage {
             .build()
     }
 
-    val imageApi: IAlbumAPI by lazy { //cambiar
-        retrofit.create(IAlbumAPI::class.java)
+    val imageApi: IImageAPI by lazy {
+        retrofit.create(IImageAPI::class.java)
     }
 
 }

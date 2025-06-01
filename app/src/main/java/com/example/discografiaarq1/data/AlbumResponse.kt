@@ -1,5 +1,3 @@
-package com.example.musicdiscography
-
 import com.google.gson.annotations.SerializedName
 
 data class AlbumResponse(
