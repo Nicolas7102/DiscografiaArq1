@@ -9,7 +9,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -27,14 +26,13 @@ fun AlbumUiItemDetail(
         horizontalAlignment = Alignment.Start
     ) {
         Text(
-            text = "ID: ${album.id}",
-            style = MaterialTheme.typography.labelMedium,
-            color = Color.Gray
-        )
-        Text(
             text = album.title,
             fontSize = 28.sp,
             fontWeight = FontWeight.Bold
+        )
+        Text(
+            text = "Lanzamiento: ${album.firstReleaseDate}",
+            style = MaterialTheme.typography.bodyLarge
         )
         Text(
             text = "Artista: ${album.artistCredit.getOrNull(0)?.name ?: "Desconocido"}",

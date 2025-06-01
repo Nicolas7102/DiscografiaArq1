@@ -1,13 +1,9 @@
 package com.example.discografiaarq1.data
 
-import android.icu.text.StringSearch
 import android.util.Log
 import com.example.musicdiscography.Album
-import okhttp3.OkHttpClient
 import okio.IOException
 import retrofit2.HttpException
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 class AlbumApiDataSource : IAlbumDataSource{
     private val TAG = "DiscographyApp"

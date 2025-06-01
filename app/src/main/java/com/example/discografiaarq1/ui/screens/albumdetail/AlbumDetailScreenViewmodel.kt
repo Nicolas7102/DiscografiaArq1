@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 class AlbumDetailScreenViewmodel(
     private val albumRepository: IAlbumRepository = AlbumRepository()
 ) : ViewModel(){
-    var uiState by mutableStateOf(AlbumDetailScreenState(""))
+    var uiState by mutableStateOf(AlbumDetailScreenState())
     private set
 
     private var fetchJob: Job? = null
@@ -21,7 +21,10 @@ class AlbumDetailScreenViewmodel(
     fun fetchAlbum() {
         fetchJob?.cancel()
         fetchJob = viewModelScope.launch {
-            uiState = uiState.copy(albumId = uiState.albumId, albumDetail = albumRepository.fetchAlbum(uiState.albumId))
+            uiState = uiState.copy(
+                albumId = uiState.albumId,
+                albumDetail = albumRepository.fetchAlbum(uiState.albumId)
+            )
         }
     }
 

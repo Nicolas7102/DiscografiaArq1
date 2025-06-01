@@ -20,8 +20,6 @@ class AlbumListScreenViewmodel(
     private val albumRepository: IAlbumRepository = AlbumRepository()
 ) : ViewModel()
 {
-    val repo = AlbumRepository(AlbumTestDataSource())
-
     var uiState by mutableStateOf(AlbumListScreenState())
         private set
 
