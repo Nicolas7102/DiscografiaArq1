@@ -31,16 +31,20 @@ class AlbumListScreenViewmodel(
             try {
                 val albums = albumRepository.fetchAlbums(uiState.searchQuery)
 
-                val albumWithImage = albums.map { album ->
-                    Log.d("AlbumApp", "album.id: ${album.id}")
-                    val releaseId = album.releases.firstOrNull()?.id
-                    val imageUrl = imageRepository.fetchImages(album.id)
-                    Log.d("AlbumApp", "imageUrl: $imageUrl")
-                    //album.copy(imageUrl = imageUrl)
-                    album.imageUrl = imageUrl
+//                val albumWithImage = albums.map { album ->
+//                    Log.d("AlbumApp", "album.id: ${album.id}")
+//                    val releaseId = album.releases.firstOrNull()?.id
+//                    val imageUrl = imageRepository.fetchImages(album.id)
+//                    Log.d("AlbumApp", "imageUrl: $imageUrl")
+//                    //album.copy(imageUrl = imageUrl)
+//                    album.imageUrl = imageUrl
+
+                albums.forEach { album ->
+                    val imgUrl = imageRepository.fetchImages(album.id)
+                    album.imageUrl = imgUrl
                 }
 
-                uiState = uiState.copy(albumList = albumWithImage)
+                uiState = uiState.copy(albumList = albums)
             }
             catch (e: IOException) {
                 Log.e("AlbumApp", "Error recuperando la lista de albumes :(")

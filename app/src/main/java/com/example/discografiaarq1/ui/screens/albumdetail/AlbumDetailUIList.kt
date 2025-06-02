@@ -19,7 +19,7 @@ fun AlbumDetailUIList(
             items = list,
             key = { it -> it.id }
         ) {
-            album -> AlbumUIItem(album, imageUrl = "", onClick = onClick)
+            album -> AlbumUIItem(album, onClick = onClick)
         }
     }
 }
