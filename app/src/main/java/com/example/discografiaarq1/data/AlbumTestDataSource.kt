@@ -1,8 +1,8 @@
 package com.example.discografiaarq1.data
 
 import android.util.Log
-import com.example.musicdiscography.Album
-import com.example.musicdiscography.AlbumResponse
+import Album
+import AlbumResponse
 import com.google.gson.Gson
 import kotlinx.coroutines.delay
 

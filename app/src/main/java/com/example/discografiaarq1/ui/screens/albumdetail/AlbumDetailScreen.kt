@@ -7,7 +7,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.ui.Modifier
-import com.example.musicdiscography.AlbumDetailUIList
 
 @Composable
 fun AlbumDetailScreen(

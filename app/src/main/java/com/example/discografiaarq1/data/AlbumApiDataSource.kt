@@ -1,7 +1,7 @@
 package com.example.discografiaarq1.data
 
 import android.util.Log
-import com.example.musicdiscography.Album
+import Album
 import okio.IOException
 import retrofit2.HttpException
 

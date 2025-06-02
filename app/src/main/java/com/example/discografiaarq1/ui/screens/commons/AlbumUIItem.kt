@@ -11,6 +11,22 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
+import Album
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
+import com.example.discografiaarq1.data.image.Images
+import coil.compose.AsyncImage
+
+@Composable
+fun AlbumCover(url: String) {
+    AsyncImage(
+        model = url,
+        contentDescription = "Album cover",
+        modifier = Modifier.size(150.dp),
+        contentScale = ContentScale.Crop
+    )
+}
 
 @Composable
 fun AlbumUIItem(
@@ -38,6 +54,17 @@ fun AlbumUIItem(
                 style = MaterialTheme.typography.labelSmall,
                 color = Color.Gray
             )
+
+            AlbumCover(url = album.imageUrl ?: "")
+
+            Text(
+                text = "id release: ${album.releases[0].id}",
+                style = MaterialTheme.typography.labelSmall,
+                color = Color.Gray
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
             Text(
                 text = album.title,
                 fontSize = 20.sp,

@@ -1,5 +1,6 @@
 package com.example.musicdiscography
 
+import Album
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -18,7 +19,7 @@ fun AlbumDetailUIList(
             items = list,
             key = { it -> it.id }
         ) {
-            album -> AlbumUIItem(album, onClick = onClick)
+            album -> AlbumUIItem(album, imageUrl = "", onClick = onClick)
         }
     }
 }

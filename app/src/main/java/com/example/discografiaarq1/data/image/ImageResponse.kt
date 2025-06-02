@@ -5,10 +5,5 @@ data class ImageResponse(
 )
 
 data class Images(
-    val thumbnails: List<Thumbnails>
-)
-
-data class Thumbnails(
-    //val large: String?,
-    val small: String?,
+    val image: String,
 )

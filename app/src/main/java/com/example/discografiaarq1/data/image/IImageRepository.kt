@@ -1,7 +1,10 @@
 package com.example.discografiaarq1.data.image
 
-import com.example.musicdiscography.Album
+import Album
+import retrofit2.http.GET
+import retrofit2.http.Path
 
 interface IImageRepository {
-    suspend fun fetchImages(id: String) : List<Thumbnails>
+    @GET("/release/{id}/")
+    suspend fun fetchImages(@Path("releaseId") releaseId : String): String
 }

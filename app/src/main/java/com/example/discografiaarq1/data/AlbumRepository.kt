@@ -1,7 +1,7 @@
 package com.example.discografiaarq1.data
 
+import Album
 import com.example.discografiaarq1.domain.IAlbumRepository
-import com.example.musicdiscography.Album
 
 class AlbumRepository (val albumDataSource: IAlbumDataSource = AlbumApiDataSource())
     : IAlbumRepository

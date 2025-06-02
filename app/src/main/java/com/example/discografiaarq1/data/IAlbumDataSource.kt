@@ -1,6 +1,6 @@
 package com.example.discografiaarq1.data
 
-import com.example.musicdiscography.Album
+import Album
 
 interface IAlbumDataSource {
     suspend fun getAlbums(search: String) : List<Album>

@@ -11,8 +11,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import com.example.discografiaarq1.ui.screens.NavigationStack
 import com.example.discografiaarq1.ui.theme.DiscografiaArq1Theme
-import com.example.musicdiscography.Album
-import com.example.musicdiscography.AlbumResponse
 import com.example.musicdiscography.AlbumListScreen
 import com.google.gson.Gson
 import kotlin.jvm.java

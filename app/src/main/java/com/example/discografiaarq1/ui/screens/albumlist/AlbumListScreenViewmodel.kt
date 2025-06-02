@@ -7,13 +7,17 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.discografiaarq1.data.AlbumRepository
+import com.example.discografiaarq1.data.image.IImageRepository
+import com.example.discografiaarq1.data.image.ImageApiDataSource
+import com.example.discografiaarq1.data.image.ImageRepository
 import com.example.discografiaarq1.domain.IAlbumRepository
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import java.io.IOException
 
 class AlbumListScreenViewmodel(
-    private val albumRepository: IAlbumRepository = AlbumRepository()
+    private val albumRepository: IAlbumRepository = AlbumRepository(),
+    private val imageRepository: IImageRepository = ImageRepository()
 ) : ViewModel()
 {
     var uiState by mutableStateOf(AlbumListScreenState())
@@ -25,8 +29,18 @@ class AlbumListScreenViewmodel(
         fetchJob?.cancel()
         fetchJob = viewModelScope.launch {
             try {
-                uiState = uiState.copy(albumList = albumRepository.fetchAlbums(uiState.searchQuery))
-                uiState = uiState.copy(imageList = imageRepository.fetchImages(uiState.searchId))
+                val albums = albumRepository.fetchAlbums(uiState.searchQuery)
+
+                val albumWithImage = albums.map { album ->
+                    Log.d("AlbumApp", "album.id: ${album.id}")
+                    val releaseId = album.releases.firstOrNull()?.id
+                    val imageUrl = imageRepository.fetchImages(album.id)
+                    Log.d("AlbumApp", "imageUrl: $imageUrl")
+                    //album.copy(imageUrl = imageUrl)
+                    album.imageUrl = imageUrl
+                }
+
+                uiState = uiState.copy(albumList = albumWithImage)
             }
             catch (e: IOException) {
                 Log.e("AlbumApp", "Error recuperando la lista de albumes :(")

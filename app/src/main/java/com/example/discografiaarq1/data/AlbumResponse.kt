@@ -12,11 +12,12 @@ data class Album(
     val artistCredit: List<ArtistCredit>,
     @SerializedName("first-release-date")
     val firstReleaseDate: String,
-    val releases: List<Release>
+    val releases: List<Release>,
+    var imageUrl: String? = null
 )
 
 data class ArtistCredit(
-    val name: String,
+    val name: String
 )
 
 data class Release(
@@ -26,5 +27,5 @@ data class Release(
 )
 
 fun emptyAlbum() : Album {
-    return Album("", "", emptyList(), "", emptyList())
+    return Album("", "", emptyList(), "", emptyList(), "")
 }
