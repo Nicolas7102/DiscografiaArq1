@@ -58,6 +58,7 @@ fun AlbumListScreen(modifier: Modifier = Modifier,
         }
 
         Spacer(modifier = Modifier.height(12.dp))
+
         AlbumUIList(vm.uiState.albumList,
             Modifier.fillMaxSize(),
             onClick = {

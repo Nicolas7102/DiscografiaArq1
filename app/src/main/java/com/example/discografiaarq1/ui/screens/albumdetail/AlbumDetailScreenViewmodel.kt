@@ -21,15 +21,17 @@ class AlbumDetailScreenViewmodel(
     fun fetchAlbum() {
         fetchJob?.cancel()
         fetchJob = viewModelScope.launch {
+            val album = albumRepository.fetchAlbum(uiState.albumId)
+            //val tracks = albumRepository.fetchTracks(uiState.albumId)
             uiState = uiState.copy(
                 albumId = uiState.albumId,
-                albumDetail = albumRepository.fetchAlbum(uiState.albumId)
+                albumR = albumRepository.fetchAlbum(uiState.albumId)
             )
         }
     }
 
     fun setAlbumId(albumId: String): Unit {
-        uiState = uiState.copy(albumId = albumId, albumDetail = uiState.albumDetail)
+        uiState = uiState.copy(albumId = albumId, albumR = uiState.albumR)
         fetchAlbum()
     }
 }

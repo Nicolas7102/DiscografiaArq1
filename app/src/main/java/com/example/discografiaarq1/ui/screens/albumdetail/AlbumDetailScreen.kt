@@ -16,11 +16,11 @@ fun AlbumDetailScreen(
 ) {
     vm.setAlbumId(albumId)
 
-    if (vm.uiState.albumDetail.id == "") {
+    if (vm.uiState.albumR.id == "") {
         Box(modifier.fillMaxSize(), contentAlignment = Alignment.Center){
             CircularProgressIndicator()
         }
     } else {
-        AlbumUiItemDetail(vm.uiState.albumDetail)
+        AlbumUiItemDetail(vm.uiState.albumR)
     }
 }

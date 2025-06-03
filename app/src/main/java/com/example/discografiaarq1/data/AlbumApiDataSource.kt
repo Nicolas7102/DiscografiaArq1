@@ -2,6 +2,7 @@ package com.example.discografiaarq1.data
 
 import android.util.Log
 import Album
+import emptyAlbum
 import okio.IOException
 import retrofit2.HttpException
 
@@ -35,9 +36,17 @@ class AlbumApiDataSource : IAlbumDataSource{
     }
 
     override suspend fun getAlbumById(albumId: String): Album {
-        val album = RetrofitInstance.albumApi.getAlbum(albumId)
-        return album.media[0].songs[0] ?: throw Exception("Album not found")
+        val response = RetrofitInstance.albumApi.getAlbumSearch(albumId)
+        return response.albums.firstOrNull()
+            ?: Album(
+                id = "fab49096-a583-44c7-80ff-ebce6898e583",
+                title = "asd",
+                artistCredit = emptyList(),
+                firstReleaseDate = "",
+                releases = emptyList(),
+                imageUrl = ""
+            ) // fill as needed
+    }
 
         // return RetrofitInstance.albumApi.getAlbumSearch(albumId).albums[0]
     }
-}
