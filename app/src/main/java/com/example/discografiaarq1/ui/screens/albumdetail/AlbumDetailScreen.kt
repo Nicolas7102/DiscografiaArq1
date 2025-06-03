@@ -7,12 +7,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavHostController
 
 @Composable
 fun AlbumDetailScreen(
     albumId: String,
     modifier: Modifier = Modifier,
-    vm: AlbumDetailScreenViewmodel = viewModel(),
+    vm: AlbumDetailScreenViewmodel = viewModel()
 ) {
     vm.setAlbumId(albumId)
 

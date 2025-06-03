@@ -22,11 +22,11 @@ fun NavigationStack() {
         composable(route = Screens.AlbumList.route) {
             AlbumListScreen(navController = navController)
         }
-        composable(
-            route = Screens.AlbumDetail.route + "/{id}") {
-            it ->
-            var albumId = it.arguments?.getString("id")
-            AlbumDetailScreen(albumId ?: "")
-        }
+        composable(route = Screens.AlbumDetail.route + "/{albumId}") { backStackEntry ->
+            val albumId = backStackEntry.arguments?.getString("albumId") ?: ""
+            AlbumDetailScreen(
+                albumId = albumId,
+            )
+    }
     }
 }

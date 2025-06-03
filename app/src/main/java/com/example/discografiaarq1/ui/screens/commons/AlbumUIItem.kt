@@ -61,7 +61,7 @@ fun AlbumUIItem(
             AlbumCover(url = album.imageUrl ?: "")
 
             Text(
-                text = "id release: ${album.releases[0].id}",
+                text = "id release: ${album.releases?.get(0)?.id}",
                 style = MaterialTheme.typography.labelSmall,
                 color = Color.Gray
             )
@@ -74,7 +74,7 @@ fun AlbumUIItem(
                 fontWeight = FontWeight.Bold
             )
             Text(
-                text = "Artista: ${album.artistCredit.getOrNull(0)?.name ?: "Desconocido"}",
+                text = "Artista: ${album.artistCredit?.getOrNull(0)?.name ?: "Desconocido"}",
                 style = MaterialTheme.typography.bodyMedium
             )
         }

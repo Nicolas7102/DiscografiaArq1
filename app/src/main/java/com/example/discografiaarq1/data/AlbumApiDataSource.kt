@@ -36,16 +36,9 @@ class AlbumApiDataSource : IAlbumDataSource{
     }
 
     override suspend fun getAlbumById(albumId: String): Album {
-        val response = RetrofitInstance.albumApi.getAlbumSearch(albumId)
-        return response.albums.firstOrNull()
-            ?: Album(
-                id = "fab49096-a583-44c7-80ff-ebce6898e583",
-                title = "asd",
-                artistCredit = emptyList(),
-                firstReleaseDate = "",
-                releases = emptyList(),
-                imageUrl = ""
-            ) // fill as needed
+        val response = RetrofitInstance.albumApi.getAlbum(albumId)
+        Log.d(TAG, "albumes: ${response.id}")
+        return response
     }
 
         // return RetrofitInstance.albumApi.getAlbumSearch(albumId).albums[0]

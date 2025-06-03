@@ -9,10 +9,10 @@ data class Album(
     val id: String,
     val title: String,
     @SerializedName("artist-credit")
-    val artistCredit: List<ArtistCredit>,
+    val artistCredit: List<ArtistCredit>?,
     @SerializedName("first-release-date")
     val firstReleaseDate: String,
-    val releases: List<Release>,
+    val releases: List<Release>?,
     var imageUrl: String? = null
 )
 

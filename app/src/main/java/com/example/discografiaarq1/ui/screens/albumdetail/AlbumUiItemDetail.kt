@@ -35,7 +35,7 @@ fun AlbumUiItemDetail(
             style = MaterialTheme.typography.bodyLarge
         )
         Text(
-            text = "Artista: ${album.artistCredit.getOrNull(0)?.name ?: "Desconocido"}",
+            text = "Artista: ${album.artistCredit?.getOrNull(0)?.name ?: "Desconocido"}",
             style = MaterialTheme.typography.bodyLarge
         )
     }

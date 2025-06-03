@@ -1,5 +1,6 @@
 package com.example.discografiaarq1.data
 
+import Album
 import AlbumDetailResponse
 import AlbumResponse
 import retrofit2.Retrofit
@@ -15,9 +16,9 @@ interface IAlbumAPI {
         @Query("fmt") format: String = "json"
     ) : AlbumResponse
 
-    @GET("release/{id}")
+    @GET("release-group/{id}")
     suspend fun getAlbum(
         @Path("id") albumId: String,
         @Query("fmt") format: String = "json"
-    ) : AlbumDetailResponse
+    ) : Album //Hacer uno para Tracks
 }
