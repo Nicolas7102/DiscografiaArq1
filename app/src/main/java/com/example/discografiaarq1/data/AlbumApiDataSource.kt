@@ -35,6 +35,9 @@ class AlbumApiDataSource : IAlbumDataSource{
     }
 
     override suspend fun getAlbumById(albumId: String): Album {
-        return RetrofitInstance.albumApi.getAlbumSearch(albumId).albums[0]
+        val album = RetrofitInstance.albumApi.getAlbum(albumId)
+        return album.media[0].songs[0] ?: throw Exception("Album not found")
+
+        // return RetrofitInstance.albumApi.getAlbumSearch(albumId).albums[0]
     }
 }

@@ -12,6 +12,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import Album
+import androidx.compose.foundation.background
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
@@ -23,7 +24,9 @@ fun AlbumCover(url: String) {
     AsyncImage(
         model = url,
         contentDescription = "Album cover",
-        modifier = Modifier.size(150.dp),
+        modifier = Modifier
+            .fillMaxHeight()
+            .fillMaxWidth(),
         contentScale = ContentScale.Crop
     )
 }
@@ -36,11 +39,11 @@ fun AlbumUIItem(
 ) {
     Card(
         modifier = modifier
+            .padding(12.dp)
+            .fillMaxWidth()
             .clickable {
                 onClick(album.id)
-            }
-            .padding(12.dp)
-            .fillMaxWidth(),
+            },
         elevation = CardDefaults.cardElevation(4.dp)
     ) {
         Column(

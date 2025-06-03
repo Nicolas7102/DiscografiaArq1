@@ -26,6 +26,19 @@ data class Release(
     val status: String
 )
 
+data class AlbumDetailResponse(
+    val media: List<Tracks>
+)
+
+data class Tracks(
+    @SerializedName("data-tracks")
+    val songs: List<Song>
+)
+
+data class Song(
+    val title: String
+)
+
 fun emptyAlbum() : Album {
     return Album("", "", emptyList(), "", emptyList(), "")
 }

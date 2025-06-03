@@ -29,7 +29,7 @@ class AlbumDetailScreenViewmodel(
     }
 
     fun setAlbumId(albumId: String): Unit {
-        uiState = uiState.copy(albumId = albumId)
+        uiState = uiState.copy(albumId = albumId, albumDetail = uiState.albumDetail)
         fetchAlbum()
     }
 }

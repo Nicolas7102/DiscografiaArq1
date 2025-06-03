@@ -17,7 +17,7 @@ fun AlbumDetailScreen(
     vm.setAlbumId(albumId)
 
     if (vm.uiState.albumDetail.id == "") {
-        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center){
+        Box(modifier.fillMaxSize(), contentAlignment = Alignment.Center){
             CircularProgressIndicator()
         }
     } else {

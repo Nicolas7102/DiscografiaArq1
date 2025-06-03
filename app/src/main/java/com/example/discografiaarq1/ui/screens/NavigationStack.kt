@@ -22,9 +22,10 @@ fun NavigationStack() {
         composable(route = Screens.AlbumList.route) {
             AlbumListScreen(navController = navController)
         }
-        composable(route = Screens.AlbumDetail.route + "/{albumId}") {
+        composable(
+            route = Screens.AlbumDetail.route + "/{id}") {
             it ->
-            var albumId = it.arguments?.getString("albumId")
+            var albumId = it.arguments?.getString("id")
             AlbumDetailScreen(albumId ?: "")
         }
     }
