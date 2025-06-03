@@ -19,6 +19,7 @@ interface IAlbumAPI {
     @GET("release-group/{id}")
     suspend fun getAlbum(
         @Path("id") albumId: String,
+        @Query("inc") include: String ="releases+artist-credits",
         @Query("fmt") format: String = "json"
     ) : Album //Hacer uno para Tracks
 }

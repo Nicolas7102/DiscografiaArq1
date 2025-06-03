@@ -34,7 +34,7 @@ fun AlbumListScreen(modifier: Modifier = Modifier,
         Text(
             text = "Listado de Albumes",
             style = MaterialTheme.typography.titleLarge,
-            modifier = modifier
+            modifier = Modifier.padding(20.dp, 60.dp, 0.dp, 0.dp)
         )
         Spacer(modifier = Modifier.height(12.dp))
 

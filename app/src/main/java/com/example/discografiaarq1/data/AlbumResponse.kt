@@ -27,7 +27,9 @@ data class Release(
 )
 
 data class AlbumDetailResponse(
-    val media: List<Tracks>
+    @SerializedName("artist-credit")
+    val artistCredit: List<ArtistCredit>,
+    val releases: List<Release>
 )
 
 data class Tracks(
