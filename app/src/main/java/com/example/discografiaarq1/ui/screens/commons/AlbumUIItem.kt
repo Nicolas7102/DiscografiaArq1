@@ -51,7 +51,7 @@ fun AlbumUIItem(
                 .padding(16.dp)
                 .fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) 
+        ) {
             AlbumCover(url = album.imageUrl ?: "")
 
             Spacer(modifier = Modifier.height(8.dp))
