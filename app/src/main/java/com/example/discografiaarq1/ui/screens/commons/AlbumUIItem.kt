@@ -51,20 +51,8 @@ fun AlbumUIItem(
                 .padding(16.dp)
                 .fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            Text(
-                text = "ID: ${album.id}",
-                style = MaterialTheme.typography.labelSmall,
-                color = Color.Gray
-            )
-
+        ) 
             AlbumCover(url = album.imageUrl ?: "")
-
-            Text(
-                text = "id release: ${album.releases?.get(0)?.id}",
-                style = MaterialTheme.typography.labelSmall,
-                color = Color.Gray
-            )
 
             Spacer(modifier = Modifier.height(8.dp))
 
