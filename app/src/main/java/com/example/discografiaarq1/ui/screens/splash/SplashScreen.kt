@@ -26,7 +26,7 @@ fun SplashScreen(
     navController: NavHostController
 )
 {
-    navController.navigate(Screens.AlbumList.route) {
+    navController.navigate(Screens.Login.route) {
         popUpTo("splash") { inclusive = true }
     }
 
