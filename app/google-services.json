@@ -12,7 +12,20 @@
           "package_name": "com.example.discografiaarq1"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "833176401504-bpmiji90h0a8i9pmcit5668sktt8hf2v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.discografiaarq1",
+            "certificate_hash": "1fbb04987256557d55f2478bf195740e791bef77"
+          }
+        },
+        {
+          "client_id": "833176401504-sn09lvgei2l8shck4vk7r8ej7j0fd2c7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyD2G9dSLr1AubWCKA2L5TIgajaZuvpevRs"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "833176401504-sn09lvgei2l8shck4vk7r8ej7j0fd2c7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

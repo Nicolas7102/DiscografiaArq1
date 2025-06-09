@@ -16,7 +16,6 @@ fun NavigationStack(
     onGoogleLoginClick: () -> Unit,
     navController: NavHostController
 ) {
-    val navController = rememberNavController()
 
         NavHost(
         navController = navController,
