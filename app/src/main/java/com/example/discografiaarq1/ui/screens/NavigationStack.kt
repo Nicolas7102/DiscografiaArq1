@@ -14,7 +14,8 @@ import com.example.musicdiscography.AlbumListScreen
 @Composable
 fun NavigationStack(
     onGoogleLoginClick: () -> Unit,
-    navController: NavHostController
+    navController: NavHostController,
+    onLogoutClick: () -> Unit
 ) {
 
         NavHost(
@@ -28,13 +29,13 @@ fun NavigationStack(
             LoginScreen(onGoogleLoginClick, navController = navController)
         }
         composable(route = Screens.AlbumList.route) {
-            AlbumListScreen(navController = navController)
+            AlbumListScreen(navController = navController, onLogoutClick = onLogoutClick)
         }
         composable(route = Screens.AlbumDetail.route + "/{albumId}") { backStackEntry ->
             val albumId = backStackEntry.arguments?.getString("albumId") ?: ""
             AlbumDetailScreen(
                 albumId = albumId,
             )
-    }
+        }
     }
 }
