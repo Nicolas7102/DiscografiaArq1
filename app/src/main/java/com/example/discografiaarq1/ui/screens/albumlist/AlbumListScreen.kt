@@ -25,12 +25,30 @@ import com.example.discografiaarq1.ui.theme.DiscografiaArq1Theme
 @Composable
 fun AlbumListScreen(modifier: Modifier = Modifier,
                     vm: AlbumListScreenViewmodel = viewModel(),
-                    navController: NavHostController
+                    navController: NavHostController,
+                    onLogoutClick: () -> Unit
 )
 {
     Column(
         modifier = Modifier.fillMaxSize().padding(16.dp)
     ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 12.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = "Hola ${vm.uiState.username}",
+                style = MaterialTheme.typography.bodyLarge,
+                modifier = Modifier.weight(1f)
+            )
+            Button(onClick = onLogoutClick) {
+                Text("Cerrar sesión")
+            }
+        }
+
+
         Text(
             text = "Listado de Albumes",
             style = MaterialTheme.typography.titleLarge,

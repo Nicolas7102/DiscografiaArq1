@@ -11,6 +11,7 @@ import com.example.discografiaarq1.data.image.IImageRepository
 import com.example.discografiaarq1.data.image.ImageApiDataSource
 import com.example.discografiaarq1.data.image.ImageRepository
 import com.example.discografiaarq1.domain.IAlbumRepository
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import java.io.IOException
@@ -22,6 +23,10 @@ class AlbumListScreenViewmodel(
 {
     var uiState by mutableStateOf(AlbumListScreenState())
         private set
+
+    init {
+        getUserName()
+    }
 
     private var fetchJob: Job? = null
 
@@ -44,7 +49,7 @@ class AlbumListScreenViewmodel(
                     album.imageUrl = imgUrl
                 }
 
-                uiState = uiState.copy(albumList = albums)
+                uiState = uiState.copy(albumList = albums, searchQuery = uiState.searchQuery, username = uiState.username)
             }
             catch (e: IOException) {
                 Log.e("AlbumApp", "Error recuperando la lista de albumes :(")
@@ -53,7 +58,11 @@ class AlbumListScreenViewmodel(
     }
 
     fun updateSearchQuery(search: String) {
-        uiState = uiState.copy(searchQuery = search, albumList = uiState.albumList)
+        uiState = uiState.copy(searchQuery = search, albumList = uiState.albumList, username = uiState.username)
+    }
+
+    fun getUserName() {
+        uiState= uiState.copy(searchQuery = uiState.searchQuery, albumList = uiState.albumList, username = "${FirebaseAuth.getInstance().currentUser?.displayName ?: "Usuario Desconocido"} ") // (${FirebaseAuth.getInstance().currentUser?.email ?: "email"})")
     }
 
 }

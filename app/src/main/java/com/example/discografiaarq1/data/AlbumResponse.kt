@@ -6,24 +6,25 @@ data class AlbumResponse(
 )
 
 data class Album(
-    val id: String,
-    val title: String,
+    val id: String = "",
+    val title: String = "",
     @SerializedName("artist-credit")
-    val artistCredit: List<ArtistCredit>?,
+    val artistCredit: List<ArtistCredit>? = null,
     @SerializedName("first-release-date")
-    val firstReleaseDate: String,
-    val releases: List<Release>?,
+    val firstReleaseDate: String = "",
+    val releases: List<Release>? = null,
     var imageUrl: String? = null
 )
 
+
 data class ArtistCredit(
-    val name: String
+    val name: String? = null
 )
 
 data class Release(
-    val id: String,
-    val title: String,
-    val status: String
+    val id: String? = null,
+    val title: String? = null,
+    val status: String? = null
 )
 
 data class AlbumDetailResponse(
@@ -42,5 +43,5 @@ data class Song(
 )
 
 fun emptyAlbum() : Album {
-    return Album("", "", emptyList(), "", emptyList(), "")
+    return Album()
 }
