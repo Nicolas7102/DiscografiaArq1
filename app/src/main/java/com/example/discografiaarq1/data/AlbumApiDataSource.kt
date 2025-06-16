@@ -42,7 +42,7 @@ class AlbumApiDataSource : IAlbumDataSource{
         Log.d("ALBUM_DB", "getAlbumById()")
 
         val db = FirebaseFirestore.getInstance()
-        var albumRes = db.collection("Albums").document(albumId).get().await()
+        var albumRes = db.collection("Favoritos").document(albumId).get().await()
         var album = albumRes.toObject(Album::class.java)
         if (album != null) {
             Log.d("ALBUM_DB", "ENCONTRADO EN FIRESTORE")
