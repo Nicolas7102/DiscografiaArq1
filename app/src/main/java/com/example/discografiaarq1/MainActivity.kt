@@ -12,6 +12,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.discografiaarq1.data.localDb.AlbumDb
+import com.example.discografiaarq1.data.localDb.AlbumDbProvider
 import com.example.discografiaarq1.ui.screens.NavigationStack
 import com.example.discografiaarq1.ui.screens.Screens
 import com.example.discografiaarq1.ui.theme.DiscografiaArq1Theme
@@ -51,6 +53,10 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        AlbumDbProvider.createDb(this)
+
+        // AlbumDb.createInstance(this)
 
         googleSignInClient = GoogleSignIn.getClient(
             this,

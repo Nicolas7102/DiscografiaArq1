@@ -2,6 +2,10 @@ package com.example.discografiaarq1.data
 
 import android.util.Log
 import Album
+import com.example.discografiaarq1.data.localDb.AlbumDb
+import com.example.discografiaarq1.data.localDb.AlbumDbProvider
+import com.example.discografiaarq1.data.localDb.toExternal
+import com.example.discografiaarq1.data.localDb.toLocal
 import emptyAlbum
 import okio.IOException
 import retrofit2.HttpException
@@ -42,15 +46,31 @@ class AlbumApiDataSource : IAlbumDataSource{
         Log.d("ALBUM_DB", "getAlbumById()")
 
         val db = FirebaseFirestore.getInstance()
+        val dbLocal = AlbumDbProvider.dbLocal
+
+        var albumLocal = dbLocal.albumDao().findById(albumId)
+        if (albumLocal != null) {
+            Log.d("ALBUM_DB", "ENCONTRADO EN LOCAL")
+            return albumLocal.toExternal()
+        } else {
+
         var albumRes = db.collection("Favoritos").document(albumId).get().await()
         var album = albumRes.toObject(Album::class.java)
         if (album != null) {
             Log.d("ALBUM_DB", "ENCONTRADO EN FIRESTORE")
+
+            val albumLocal = album.toLocal()
+            dbLocal.albumDao().insert(albumLocal)
+
             return album
         } else {
             Log.d("ALBUM_DB", "NO ENCONTRADO EN FIRESTORE")
             album = RetrofitInstance.albumApi.getAlbum(albumId)
             db.collection("Favoritos").document(albumId).set(album)
+
+            val albumLocal = album.toLocal()
+            dbLocal.albumDao().insert(albumLocal)
+
             return album
         }
 
@@ -58,4 +78,5 @@ class AlbumApiDataSource : IAlbumDataSource{
         //Log.d(TAG, "albumes: ${response.id}")
         //return response
     }
+}
 }

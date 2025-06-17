@@ -1,6 +1,5 @@
 package com.example.musicdiscography
 
-import android.R.attr.onClick
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -9,15 +8,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.graphics.Color
 import Album
-import androidx.compose.foundation.background
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import com.example.discografiaarq1.data.image.Images
-import coil.compose.AsyncImage
+import coil.compose.AsyncImage //TODO CAMBIAR POR GLIDE
 
 @Composable
 fun AlbumCover(url: String) {

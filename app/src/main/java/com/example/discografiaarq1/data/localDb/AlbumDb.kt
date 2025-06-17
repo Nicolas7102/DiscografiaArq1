@@ -8,6 +8,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
+
 @Database(entities = [AlbumLocalDb::class], version = 1, exportSchema = false)
 abstract class AlbumDb : RoomDatabase() {
     abstract fun albumDao(): IAlbumDao
@@ -22,10 +23,12 @@ abstract class AlbumDb : RoomDatabase() {
             INSTANCE ?: buildDatabase(context)
         }
 
-        private fun buildDatabase(context: android.content.Context): AlbumDb = Room.databaseBuilder(
+        private fun buildDatabase(context: Context): AlbumDb = Room.databaseBuilder(
             context,
             AlbumDb::class.java,
-            "album_db").fallbackToDestructiveMigration().build()
+            "album_db")
+            .fallbackToDestructiveMigration()
+            .build()
 
         suspend fun clean(context: Context) = coroutineScope {
             launch(Dispatchers.IO) {
