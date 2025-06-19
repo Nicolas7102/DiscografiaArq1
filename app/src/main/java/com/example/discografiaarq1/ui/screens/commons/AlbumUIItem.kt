@@ -31,7 +31,7 @@ fun AlbumCover(url: String) {
 fun AlbumUIItem(
     album: Album,
     isFavorite: Boolean,
-    onFavoriteClick: (String) -> Unit,
+    onFavoriteClick: (Album) -> Unit,
     modifier: Modifier = Modifier,
     onClick: (String) -> Unit
 ) {
@@ -60,7 +60,7 @@ fun AlbumUIItem(
                 style = MaterialTheme.typography.bodyMedium
             )
 
-            IconButton(onClick = { onFavoriteClick(album.id) }) {
+            IconButton(onClick = { onFavoriteClick(album) }) {
                 if (isFavorite) {
                     Icon(Icons.Filled.Favorite, contentDescription = "Favorito", tint = MaterialTheme.colorScheme.primary)
                 } else {

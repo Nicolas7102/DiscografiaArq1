@@ -1,5 +1,6 @@
 package com.example.discografiaarq1.ui.screens.albumlist
 
+import Album
 import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -57,21 +58,28 @@ class AlbumListScreenViewmodel(
             }
     }
 
-    fun toggleFavorite(albumId: String) {
+    fun toggleFavorite(album: Album) {
         val userId = auth.currentUser?.uid ?: return
         val favorites = uiState.favorites.toMutableSet()
 
-        if (favorites.contains(albumId)) {
-            favorites.remove(albumId)
-            db.collection("users").document(userId)
-                .collection("favorites").document(albumId)
-                .delete()
+        val favoriteRef = db.collection("users").document(userId)
+            .collection("favorites").document(album.id)
+
+        if (favorites.contains(album.id)) {
+            favorites.remove(album.id)
+            favoriteRef.delete()
+                .addOnFailureListener { e ->
+                    Log.e("AlbumApp", "Error eliminando favorito: ${e.message}")
+                }
         } else {
-            favorites.add(albumId)
-            db.collection("users").document(userId)
-                .collection("favorites").document(albumId)
-                .set(mapOf("timestamp" to System.currentTimeMillis()))
+            favorites.add(album.id)
+            // Guardar el álbum completo en Firestore
+            favoriteRef.set(album)
+                .addOnFailureListener { e ->
+                    Log.e("AlbumApp", "Error guardando favorito: ${e.message}")
+                }
         }
+
         uiState = uiState.copy(favorites = favorites)
     }
 

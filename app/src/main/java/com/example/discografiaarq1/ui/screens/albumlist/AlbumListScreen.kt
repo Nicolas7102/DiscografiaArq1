@@ -98,7 +98,7 @@ fun AlbumListScreen(
             favorites = vm.uiState.favorites,
             modifier = Modifier.fillMaxSize(),
             onClick = { id -> navController.navigate(Screens.AlbumDetail.route + "/$id") },
-            onFavoriteClick = { id -> vm.toggleFavorite(id) }
+            onFavoriteClick = { album -> vm.toggleFavorite(album) }
         )
     }
 }
