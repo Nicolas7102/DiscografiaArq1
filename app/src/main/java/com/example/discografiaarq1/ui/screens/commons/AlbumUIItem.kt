@@ -9,6 +9,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.font.FontWeight
 import Album
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.ui.layout.ContentScale
 import coil.compose.AsyncImage //TODO CAMBIAR POR GLIDE
 
@@ -27,6 +30,8 @@ fun AlbumCover(url: String) {
 @Composable
 fun AlbumUIItem(
     album: Album,
+    isFavorite: Boolean,
+    onFavoriteClick: (String) -> Unit,
     modifier: Modifier = Modifier,
     onClick: (String) -> Unit
 ) {
@@ -34,15 +39,11 @@ fun AlbumUIItem(
         modifier = modifier
             .padding(12.dp)
             .fillMaxWidth()
-            .clickable {
-                onClick(album.id)
-            },
+            .clickable { onClick(album.id) },
         elevation = CardDefaults.cardElevation(4.dp)
     ) {
         Column(
-            modifier = Modifier
-                .padding(16.dp)
-                .fillMaxWidth(),
+            modifier = Modifier.padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             AlbumCover(url = album.imageUrl ?: "")
@@ -58,6 +59,14 @@ fun AlbumUIItem(
                 text = "Artista: ${album.artistCredit?.getOrNull(0)?.name ?: "Desconocido"}",
                 style = MaterialTheme.typography.bodyMedium
             )
+
+            IconButton(onClick = { onFavoriteClick(album.id) }) {
+                if (isFavorite) {
+                    Icon(Icons.Filled.Favorite, contentDescription = "Favorito", tint = MaterialTheme.colorScheme.primary)
+                } else {
+                    Icon(Icons.Outlined.FavoriteBorder, contentDescription = "No favorito")
+                }
+            }
         }
     }
 }

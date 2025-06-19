@@ -12,20 +12,58 @@ import com.example.discografiaarq1.data.image.ImageApiDataSource
 import com.example.discografiaarq1.data.image.ImageRepository
 import com.example.discografiaarq1.domain.IAlbumRepository
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import java.io.IOException
+
 
 class AlbumListScreenViewmodel(
     private val albumRepository: IAlbumRepository = AlbumRepository(),
     private val imageRepository: IImageRepository = ImageRepository()
 ) : ViewModel()
 {
+    private val db = FirebaseFirestore.getInstance()
+    private val auth = FirebaseAuth.getInstance()
+
     var uiState by mutableStateOf(AlbumListScreenState())
         private set
 
     init {
         getUserName()
+        loadFavorites()
+    }
+
+    private fun loadFavorites() {
+        val userId = auth.currentUser?.uid ?: return
+        db.collection("users").document(userId)
+            .collection("favorites")
+            .get()
+            .addOnSuccessListener { result ->
+                val favIds = result.documents.mapNotNull { it.id }.toSet()
+                uiState = uiState.copy(favorites = favIds)
+            }
+            .addOnFailureListener {
+                // Log or handle error
+            }
+    }
+
+    fun toggleFavorite(albumId: String) {
+        val userId = auth.currentUser?.uid ?: return
+        val favorites = uiState.favorites.toMutableSet()
+
+        if (favorites.contains(albumId)) {
+            favorites.remove(albumId)
+            db.collection("users").document(userId)
+                .collection("favorites").document(albumId)
+                .delete()
+        } else {
+            favorites.add(albumId)
+            db.collection("users").document(userId)
+                .collection("favorites").document(albumId)
+                .set(mapOf("timestamp" to System.currentTimeMillis()))
+        }
+        uiState = uiState.copy(favorites = favorites)
     }
 
     private var fetchJob: Job? = null

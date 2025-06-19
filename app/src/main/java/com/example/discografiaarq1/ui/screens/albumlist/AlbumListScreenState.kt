@@ -6,5 +6,6 @@ data class AlbumListScreenState (
     val username: String = "Username",
     val albumList: List<Album> = emptyList(),
     val searchQuery: String = "",
-    val searchImage: String = ""
+    val searchImage: String = "",
+    val favorites: Set<String> = emptySet()
 )

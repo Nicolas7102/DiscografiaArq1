@@ -14,18 +14,19 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun AlbumUIList(
     list: List<Album>,
+    favorites: Set<String>,
     modifier: Modifier = Modifier,
-    onClick: (String) -> Unit
+    onClick: (String) -> Unit,
+    onFavoriteClick: (String) -> Unit
 ) {
-    LazyColumn(
-        modifier = modifier
-            .padding(WindowInsets.systemBars.asPaddingValues()) // <-- Avoid system bars
-    ) {
-        items(
-            items = list,
-            key = { it.id }
-        ) { album ->
-            AlbumUIItem(album, onClick = onClick)
+    LazyColumn(modifier = modifier) {
+        items(list, key = { it.id }) { album ->
+            AlbumUIItem(
+                album = album,
+                isFavorite = favorites.contains(album.id),
+                onFavoriteClick = onFavoriteClick,
+                onClick = onClick
+            )
         }
     }
 }

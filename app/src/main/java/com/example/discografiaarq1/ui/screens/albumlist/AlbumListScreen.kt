@@ -77,12 +77,12 @@ fun AlbumListScreen(modifier: Modifier = Modifier,
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        AlbumUIList(vm.uiState.albumList,
-            Modifier.fillMaxSize(),
-            onClick = {
-                id -> navController.navigate(Screens.AlbumDetail.route + "/${id}")
-                println("Album seleccionado: ${Screens.AlbumDetail.route}/$id")
-        })
+        AlbumUIList(
+            list = vm.uiState.albumList,
+            favorites = vm.uiState.favorites,
+            modifier = Modifier.fillMaxSize(),
+            onClick = { id -> navController.navigate(Screens.AlbumDetail.route + "/$id") },
+            onFavoriteClick = { id -> vm.toggleFavorite(id) }
+        )
     }
-
 }
