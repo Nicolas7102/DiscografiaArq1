@@ -15,6 +15,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import java.io.IOException
 
 
@@ -29,22 +30,30 @@ class AlbumListScreenViewmodel(
     var uiState by mutableStateOf(AlbumListScreenState())
         private set
 
+    var showFavoritesOnly by mutableStateOf(false)
+        private set
+
     init {
         getUserName()
         loadFavorites()
     }
 
+    private fun getCurrentUserId(): String? {
+        return auth.currentUser?.uid
+    }
+
     private fun loadFavorites() {
-        val userId = auth.currentUser?.uid ?: return
+        val userId = getCurrentUserId() ?: return
+
         db.collection("users").document(userId)
             .collection("favorites")
             .get()
             .addOnSuccessListener { result ->
-                val favIds = result.documents.mapNotNull { it.id }.toSet()
+                val favIds = result.documents.map { it.id }.toSet()
                 uiState = uiState.copy(favorites = favIds)
             }
             .addOnFailureListener {
-                // Log or handle error
+                Log.e("AlbumApp", "Error cargando favoritos: ${it.message}")
             }
     }
 
@@ -64,6 +73,41 @@ class AlbumListScreenViewmodel(
                 .set(mapOf("timestamp" to System.currentTimeMillis()))
         }
         uiState = uiState.copy(favorites = favorites)
+    }
+
+    fun toggleFavoritesView() {
+        showFavoritesOnly = !showFavoritesOnly
+        if (showFavoritesOnly) {
+            val favoriteAlbums = uiState.albumList.filter { uiState.favorites.contains(it.id) }
+            uiState = uiState.copy(albumList = favoriteAlbums)
+        } else {
+            fetchAlbums()
+        }
+    }
+
+    fun fetchFavoriteAlbums() {
+        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
+
+        viewModelScope.launch {
+            try {
+                val favDocs = db.collection("users")
+                    .document(userId)
+                    .collection("favorites")
+                    .get()
+                    .await()
+
+                val albums = favDocs.mapNotNull { it.toObject(Album::class.java) }
+
+                // Si querés actualizar las imágenes:
+                albums.forEach { album ->
+                    album.imageUrl = imageRepository.fetchImages(album.id)
+                }
+
+                uiState = uiState.copy(albumList = albums)
+            } catch (e: Exception) {
+                Log.e("AlbumApp", "Error recuperando favoritos: ${e.localizedMessage}")
+            }
+        }
     }
 
     private var fetchJob: Job? = null

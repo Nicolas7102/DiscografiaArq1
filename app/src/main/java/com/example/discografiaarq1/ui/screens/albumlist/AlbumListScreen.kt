@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -23,15 +24,18 @@ import com.example.discografiaarq1.ui.screens.albumlist.AlbumListScreenViewmodel
 import com.example.discografiaarq1.ui.theme.DiscografiaArq1Theme
 
 @Composable
-fun AlbumListScreen(modifier: Modifier = Modifier,
-                    vm: AlbumListScreenViewmodel = viewModel(),
-                    navController: NavHostController,
-                    onLogoutClick: () -> Unit
-)
-{
+fun AlbumListScreen(
+    modifier: Modifier = Modifier,
+    vm: AlbumListScreenViewmodel = viewModel(),
+    navController: NavHostController,
+    onLogoutClick: () -> Unit
+) {
     Column(
-        modifier = Modifier.fillMaxSize().padding(16.dp)
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
     ) {
+        // Header con nombre de usuario y logout
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -40,7 +44,7 @@ fun AlbumListScreen(modifier: Modifier = Modifier,
         ) {
             Text(
                 text = "Hola ${vm.uiState.username}",
-                style = MaterialTheme.typography.bodyLarge,
+                style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.weight(1f)
             )
             Button(onClick = onLogoutClick) {
@@ -48,31 +52,43 @@ fun AlbumListScreen(modifier: Modifier = Modifier,
             }
         }
 
-
+        // Título
         Text(
-            text = "Listado de Albumes",
-            style = MaterialTheme.typography.titleLarge,
-            modifier = Modifier.padding(20.dp, 60.dp, 0.dp, 0.dp)
+            text = "Listado de Álbumes",
+            style = MaterialTheme.typography.headlineSmall,
+            modifier = Modifier.padding(top = 8.dp, bottom = 12.dp)
         )
-        Spacer(modifier = Modifier.height(12.dp))
 
+        // Buscador
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
             TextField(
                 value = vm.uiState.searchQuery,
+                onValueChange = { vm.updateSearchQuery(it) },
+                label = { Text("Buscar álbum") },
                 modifier = Modifier.weight(1f),
-                label = { Text("Buscar album") },
-                singleLine = true,
-                onValueChange = { vm.updateSearchQuery(it) }
+                singleLine = true
             )
-            Spacer(modifier = Modifier.height(12.dp))
-            Button(
-                onClick = {vm.fetchAlbums()}
-            ) {
+            Spacer(modifier = Modifier.width(8.dp))
+            Button(onClick = { vm.fetchAlbums() }) {
                 Text("Buscar")
             }
+        }
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Button(
+            onClick = { vm.toggleFavoritesView() },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+
+        Button(
+            onClick = { navController.navigate(Screens.Favorites.route) },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Ver Favoritos")
         }
 
         Spacer(modifier = Modifier.height(12.dp))
@@ -85,4 +101,5 @@ fun AlbumListScreen(modifier: Modifier = Modifier,
             onFavoriteClick = { id -> vm.toggleFavorite(id) }
         )
     }
+}
 }
