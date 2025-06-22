@@ -65,4 +65,12 @@ class AlbumListScreenViewmodel(
         uiState= uiState.copy(searchQuery = uiState.searchQuery, albumList = uiState.albumList, username = "${FirebaseAuth.getInstance().currentUser?.displayName ?: "Usuario Desconocido"} ") // (${FirebaseAuth.getInstance().currentUser?.email ?: "email"})")
     }
 
+    fun fetchFavorites() {
+        fetchJob?.cancel()
+        fetchJob = viewModelScope.launch {
+            val albums = albumRepository.fetchFavorites()
+            uiState = uiState.copy(favorites = albums)
+        }
+    }
+
 }

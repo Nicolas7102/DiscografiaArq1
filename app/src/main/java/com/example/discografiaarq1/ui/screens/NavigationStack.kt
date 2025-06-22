@@ -1,13 +1,11 @@
 package com.example.discografiaarq1.ui.screens
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import com.example.discografiaarq1.ui.screens.albumdetail.AlbumDetailScreen
-import com.example.discografiaarq1.ui.screens.albumlist.FavoritesScreen
+import com.example.discografiaarq1.ui.screens.favorites.FavoritesScreen
 import com.example.discografiaarq1.ui.screens.login.LoginScreen
 import com.example.discografiaarq1.ui.screens.splash.SplashScreen
 import com.example.musicdiscography.AlbumListScreen

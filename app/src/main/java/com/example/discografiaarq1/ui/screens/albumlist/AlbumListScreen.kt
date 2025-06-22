@@ -80,6 +80,7 @@ fun AlbumListScreen(modifier: Modifier = Modifier,
             onClick = {navController.navigate(Screens.Favorites.route)}
         ) {
             Text("Favoritos")
+
         }
 
 

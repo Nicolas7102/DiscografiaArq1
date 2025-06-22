@@ -80,34 +80,24 @@ class AlbumApiDataSource : IAlbumDataSource{
     }
     }
 
-    suspend fun getFavoritos(albumId: String): Album { //TODO Cambiar funcionalidad
+    override suspend fun getFavorites(): List<Album>{
         val db = FirebaseFirestore.getInstance()
-        val dbLocal = AlbumDbProvider.dbLocal
 
-        var albumLocal = dbLocal.albumDao().findById(albumId)
-        if (albumLocal != null) {
-            Log.d("ALBUM_DB", "ENCONTRADO EN LOCAL")
-            return albumLocal.toExternal()
-        } else {
-            var albumRes = db.collection("Favoritos").document(albumId).get().await()
-            var album = albumRes.toObject(Album::class.java)
-            if (album != null) {
-                Log.d("ALBUM_DB", "ENCONTRADO EN FIRESTORE")
-
-                val albumLocal = album.toLocal()
-                dbLocal.albumDao().insert(albumLocal)
-
-                return album
-            } else {
-                Log.d("ALBUM_DB", "NO ENCONTRADO EN FIRESTORE")
-                album = RetrofitInstance.albumApi.getAlbum(albumId)
-                db.collection("Favoritos").document(albumId).set(album)
-
-                val albumLocal = album.toLocal()
-                dbLocal.albumDao().insert(albumLocal)
-
-                return album
-            }
+        return try{
+            val albumResponse = db.collection("Favoritos").get().await()
+            albumResponse.documents.mapNotNull { doc -> doc.toObject(Album::class.java) }
+        } catch (e: Exception) {
+            Log.w("ALBUM_DB", "Error getting documents.", e)
+            emptyList()
         }
+
+//        db.collection("Favoritos").get().addOnSuccessListener { result ->
+//            for (document in result) {
+//                Log.d("ALBUM_DB", "${document.id} => ${document.data}")
+//            }
+//        }
+//        .addOnFailureListener { exception ->
+//            Log.w("ALBUM_DB", "Error getting documents.", exception)
+//        }.await()
     }
 }

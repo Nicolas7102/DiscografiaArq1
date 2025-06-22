@@ -13,4 +13,8 @@ class AlbumRepository (val albumDataSource: IAlbumDataSource = AlbumApiDataSourc
     override suspend fun fetchAlbum(albumId: String) : Album{
         return albumDataSource.getAlbumById(albumId)
     }
+
+    override suspend fun fetchFavorites() : List<Album>{
+        return albumDataSource.getFavorites()
+    }
 }

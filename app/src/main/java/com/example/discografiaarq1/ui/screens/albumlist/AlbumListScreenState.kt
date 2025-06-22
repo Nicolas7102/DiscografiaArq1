@@ -7,5 +7,4 @@ data class AlbumListScreenState (
     val albumList: List<Album> = emptyList(),
     val searchQuery: String = "",
     val searchImage: String = "",
-    val favorites: List<Album> = emptyList()
 )
