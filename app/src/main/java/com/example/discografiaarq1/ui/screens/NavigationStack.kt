@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.discografiaarq1.ui.screens.albumdetail.AlbumDetailScreen
+import com.example.discografiaarq1.ui.screens.albumlist.FavoritesScreen
 import com.example.discografiaarq1.ui.screens.login.LoginScreen
 import com.example.discografiaarq1.ui.screens.splash.SplashScreen
 import com.example.musicdiscography.AlbumListScreen
@@ -37,5 +38,8 @@ fun NavigationStack(
                 albumId = albumId,
             )
         }
+            composable(route = Screens.Favorites.route) {
+                FavoritesScreen(navController = navController, onLogoutClick = onLogoutClick)
+            }
     }
 }

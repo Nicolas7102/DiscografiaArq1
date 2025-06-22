@@ -74,6 +74,14 @@ fun AlbumListScreen(modifier: Modifier = Modifier,
                 Text("Buscar")
             }
         }
+        Spacer(modifier = Modifier.height(20.dp))
+
+        Button(
+            onClick = {navController.navigate(Screens.Favorites.route)}
+        ) {
+            Text("Favoritos")
+        }
+
 
         Spacer(modifier = Modifier.height(12.dp))
 
