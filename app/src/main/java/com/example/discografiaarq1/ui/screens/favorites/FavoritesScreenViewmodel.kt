@@ -11,7 +11,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 class FavoritesScreenViewmodel(
-    private val albumRepository: IAlbumRepository
+    private val albumRepository: IAlbumRepository = AlbumRepository()
 ): ViewModel() {
 
     var uiState by mutableStateOf(FavoritesScreenState())
@@ -27,4 +27,12 @@ class FavoritesScreenViewmodel(
 
         }
     }
+
+//    fun fetchFavorites() {
+//        fetchJob?.cancel()
+//        fetchJob = viewModelScope.launch {
+//            val albums = albumRepository.fetchFavorites()
+//            uiState = uiState.copy(favorites = albums)
+//        }
+//    }
 }
