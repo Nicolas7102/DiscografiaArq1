@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.discografiaarq1.data.AlbumRepository
 import com.example.discografiaarq1.domain.IAlbumRepository
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
@@ -19,6 +20,10 @@ class FavoritesScreenViewmodel(
 
     private var fetchJob: Job? = null
 
+    init {
+        getUserName()
+    }
+
     fun fetchFavorites() {
         fetchJob?.cancel()
         fetchJob = viewModelScope.launch {
@@ -28,11 +33,7 @@ class FavoritesScreenViewmodel(
         }
     }
 
-//    fun fetchFavorites() {
-//        fetchJob?.cancel()
-//        fetchJob = viewModelScope.launch {
-//            val albums = albumRepository.fetchFavorites()
-//            uiState = uiState.copy(favorites = albums)
-//        }
-//    }
+    fun getUserName() {
+        uiState= uiState.copy(username = "${FirebaseAuth.getInstance().currentUser?.displayName ?: "Usuario Desconocido"} ")
+    }
 }
