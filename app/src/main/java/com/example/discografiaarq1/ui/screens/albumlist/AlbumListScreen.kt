@@ -77,6 +77,15 @@ fun AlbumListScreen(modifier: Modifier = Modifier,
 
         Spacer(modifier = Modifier.height(12.dp))
 
+        Button(
+            onClick = { navController.navigate(Screens.Favorites.route) },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Favoritos")
+        }
+
+        Spacer(modifier = Modifier.height(12.dp))
+
         AlbumUIList(vm.uiState.albumList,
             Modifier.fillMaxSize(),
             onClick = {
