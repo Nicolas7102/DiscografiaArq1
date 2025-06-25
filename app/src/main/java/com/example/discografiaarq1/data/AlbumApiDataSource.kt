@@ -45,7 +45,6 @@ class AlbumApiDataSource : IAlbumDataSource{
     override suspend fun getAlbumById(albumId: String): Album {
         Log.d("ALBUM_DB", "getAlbumById()")
 
-        val db = FirebaseFirestore.getInstance()
         val dbLocal = AlbumDbProvider.dbLocal
 
         var albumLocal = dbLocal.albumDao().findById(albumId)
@@ -53,20 +52,9 @@ class AlbumApiDataSource : IAlbumDataSource{
             Log.d("ALBUM_DB", "ENCONTRADO EN LOCAL")
             return albumLocal.toExternal()
         } else {
+            Log.d("ALBUM_DB", "NO ENCONTRADO EN LOCAL")
 
-        var albumRes = db.collection("Favoritos").document(albumId).get().await()
-        var album = albumRes.toObject(Album::class.java)
-        if (album != null) {
-            Log.d("ALBUM_DB", "ENCONTRADO EN FIRESTORE")
-
-            val albumLocal = album.toLocal()
-            dbLocal.albumDao().insert(albumLocal)
-
-            return album
-        } else {
-            Log.d("ALBUM_DB", "NO ENCONTRADO EN FIRESTORE")
-            album = RetrofitInstance.albumApi.getAlbum(albumId)
-            db.collection("Favoritos").document(albumId).set(album)
+            val album = RetrofitInstance.albumApi.getAlbum(albumId)
 
             val albumLocal = album.toLocal()
             dbLocal.albumDao().insert(albumLocal)
@@ -82,6 +70,18 @@ class AlbumApiDataSource : IAlbumDataSource{
 
     override suspend fun getFavorites(): List<Album>{
         val db = FirebaseFirestore.getInstance()
+
+        //
+        var albumRes = db.collection("Favoritos").document(albumId).get().await()
+        var album = albumRes.toObject(Album::class.java)
+        if (album != null) {
+            Log.d("ALBUM_DB", "ENCONTRADO EN FIRESTORE")
+
+            val albumLocal = album.toLocal()
+            dbLocal.albumDao().insert(albumLocal)
+
+            return album
+            //
 
         return try{
             val albumResponse = db.collection("Favoritos").get().await()
