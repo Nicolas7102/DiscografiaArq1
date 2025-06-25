@@ -13,7 +13,7 @@ import androidx.navigation.NavHostController
 fun AlbumDetailScreen(
     albumId: String,
     modifier: Modifier = Modifier,
-    vm: AlbumDetailScreenViewmodel = viewModel()
+    vm: AlbumDetailScreenViewmodel = viewModel(),
 ) {
     vm.setAlbumId(albumId)
 
@@ -22,6 +22,6 @@ fun AlbumDetailScreen(
             CircularProgressIndicator()
         }
     } else {
-        AlbumUiItemDetail(vm.uiState.albumR)
+        AlbumUiItemDetail(vm.uiState.albumR, onFavoriteClick = { vm.toggleFavorite() }, isFavorite = vm.uiState.isFavorite)
+        }
     }
-}

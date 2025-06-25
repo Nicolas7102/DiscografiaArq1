@@ -8,13 +8,19 @@ import androidx.lifecycle.viewModelScope
 import com.example.discografiaarq1.data.AlbumRepository
 import com.example.discografiaarq1.domain.IAlbumRepository
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class AlbumDetailScreenViewmodel(
-    private val albumRepository: IAlbumRepository = AlbumRepository()
-) : ViewModel(){
+    private val albumRepository: IAlbumRepository = AlbumRepository(),
+    private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance(),
+    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
+) : ViewModel() {
+
     var uiState by mutableStateOf(AlbumDetailScreenState())
-    private set
+        private set
 
     private var fetchJob: Job? = null
 
@@ -22,16 +28,54 @@ class AlbumDetailScreenViewmodel(
         fetchJob?.cancel()
         fetchJob = viewModelScope.launch {
             val album = albumRepository.fetchAlbum(uiState.albumId)
-            //val tracks = albumRepository.fetchTracks(uiState.albumId)
             uiState = uiState.copy(
                 albumId = uiState.albumId,
-                albumR = albumRepository.fetchAlbum(uiState.albumId)
+                albumR = album
             )
+            // Luego de cargar el álbum, cargamos el estado favorito
+            checkIfFavorite()
         }
     }
 
-    fun setAlbumId(albumId: String): Unit {
-        uiState = uiState.copy(albumId = albumId, albumR = uiState.albumR)
+    fun setAlbumId(albumId: String) {
+        uiState = uiState.copy(albumId = albumId)
         fetchAlbum()
+    }
+
+    private fun checkIfFavorite() {
+        val userId = auth.currentUser?.uid ?: return
+        val docRef = firestore.collection("favorites")
+            .document(userId)
+            .collection("albums")
+            .document(uiState.albumId)
+
+        docRef.get().addOnSuccessListener { document ->
+            uiState = uiState.copy(isFavorite = document.exists())
+        }
+    }
+
+    fun toggleFavorite() {
+        val userId = auth.currentUser?.uid ?: return
+        val docRef = firestore.collection("favorites")
+            .document(userId)
+            .collection("albums")
+            .document(uiState.albumId)
+
+        if (uiState.isFavorite) {
+            // Ya es favorito, eliminar
+            docRef.delete().addOnSuccessListener {
+                uiState = uiState.copy(isFavorite = false)
+            }
+        } else {
+            // No es favorito, agregar
+            val albumData = mapOf(
+                "title" to uiState.albumR.title,
+                "artist" to (uiState.albumR.artistCredit?.getOrNull(0)?.name ?: "Desconocido"),
+                "addedAt" to System.currentTimeMillis()
+            )
+            docRef.set(albumData).addOnSuccessListener {
+                uiState = uiState.copy(isFavorite = true)
+            }
+        }
     }
 }

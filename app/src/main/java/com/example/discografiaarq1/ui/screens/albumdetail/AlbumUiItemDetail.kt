@@ -13,32 +13,55 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import Album
+import androidx.compose.foundation.layout.Box
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.outlined.FavoriteBorder
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.SegmentedButtonDefaults.Icon
 
 @Composable
 fun AlbumUiItemDetail(
-    album: Album
+    album: Album,
+    onFavoriteClick: (Album) -> Unit,
+    isFavorite: Boolean
 ) {
-    Column(
+    Box(
         modifier = Modifier
             .fillMaxSize()
             .padding(24.dp)
-            .padding(top = 80.dp)
-        ,
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-        horizontalAlignment = Alignment.Start
     ) {
-        Text(
-            text = album.title,
-            fontSize = 28.sp,
-            fontWeight = FontWeight.Bold
-        )
-        Text(
-            text = "Lanzamiento: ${album.firstReleaseDate}",
-            style = MaterialTheme.typography.bodyLarge
-        )
-        Text(
-            text = "Artista: ${album.artistCredit?.getOrNull(0)?.name ?: "Desconocido"}",
-            style = MaterialTheme.typography.bodyLarge
-        )
+        IconButton(
+            onClick = { onFavoriteClick(album) },
+            modifier = Modifier.align(Alignment.TopEnd)
+        ) {
+            androidx.compose.material3.Icon(
+                imageVector = if (isFavorite) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
+                contentDescription = if (isFavorite) "Eliminar de favoritos" else "Agregar a favoritos",
+                tint = MaterialTheme.colorScheme.primary
+            )
+        }
+
+        Column(
+            modifier = Modifier
+                .align(Alignment.TopStart)
+                .padding(top = 56.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            horizontalAlignment = Alignment.Start
+        ) {
+            Text(
+                text = album.title,
+                fontSize = 28.sp,
+                fontWeight = FontWeight.Bold
+            )
+            Text(
+                text = "Lanzamiento: ${album.firstReleaseDate}",
+                style = MaterialTheme.typography.bodyLarge
+            )
+            Text(
+                text = "Artista: ${album.artistCredit?.getOrNull(0)?.name ?: "Desconocido"}",
+                style = MaterialTheme.typography.bodyLarge
+            )
+        }
     }
 }

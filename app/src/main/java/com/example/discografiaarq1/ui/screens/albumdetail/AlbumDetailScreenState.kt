@@ -8,5 +8,6 @@ import emptyAlbum
 data class AlbumDetailScreenState(
     val albumId: String = "",
     val albumR: Album = emptyAlbum(),
-    val tracks: Tracks = Tracks(emptyList())
+    val tracks: Tracks = Tracks(emptyList()),
+    val isFavorite: Boolean = false
 )
