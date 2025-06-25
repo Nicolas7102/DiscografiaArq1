@@ -32,7 +32,6 @@ class AlbumDetailScreenViewmodel(
                 albumId = uiState.albumId,
                 albumR = album
             )
-            // Luego de cargar el álbum, cargamos el estado favorito
             checkIfFavorite()
         }
     }
@@ -62,16 +61,15 @@ class AlbumDetailScreenViewmodel(
             .document(uiState.albumId)
 
         if (uiState.isFavorite) {
-            // Ya es favorito, eliminar
             docRef.delete().addOnSuccessListener {
                 uiState = uiState.copy(isFavorite = false)
             }
         } else {
-            // No es favorito, agregar
             val albumData = mapOf(
                 "title" to uiState.albumR.title,
                 "artist" to (uiState.albumR.artistCredit?.getOrNull(0)?.name ?: "Desconocido"),
-                "addedAt" to System.currentTimeMillis()
+                "releaseDate" to uiState.albumR.firstReleaseDate,
+                "imageUrl" to uiState.albumR.imageUrl,
             )
             docRef.set(albumData).addOnSuccessListener {
                 uiState = uiState.copy(isFavorite = true)
