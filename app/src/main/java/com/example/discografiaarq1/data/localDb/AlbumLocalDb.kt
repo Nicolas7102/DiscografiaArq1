@@ -10,7 +10,7 @@ import com.google.gson.annotations.SerializedName
 data class AlbumLocalDb(
     @PrimaryKey val id: String = "",
     val title: String = "",
-    val artistCreditJson: String? = null,  // ahora es String JSON
+    val artistCreditJson: String? = null,
     val firstReleaseDate: String = "",
     var imageUrl: String? = null,
 )

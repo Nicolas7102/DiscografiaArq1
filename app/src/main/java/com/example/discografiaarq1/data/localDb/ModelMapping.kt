@@ -9,11 +9,11 @@ import com.google.gson.reflect.TypeToken
 
 fun Album.toLocal(): AlbumLocalDb {
     val gson = Gson()
-    val json = gson.toJson(artistCredit)  // convertís lista a JSON
+    val json = gson.toJson(artistCredit)
     return AlbumLocalDb(
         id = id,
         title = title,
-        artistCreditJson = json,  // acá va el JSON string
+        artistCreditJson = json,
         firstReleaseDate = firstReleaseDate,
         imageUrl = imageUrl
     )
